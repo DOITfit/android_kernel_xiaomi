@@ -2,6 +2,7 @@
  * Backlight Lowlevel Control Abstraction
  *
  * Copyright (C) 2003,2004 Hewlett-Packard Company
+ * Copyright (C) 2019 XiaoMi, Inc.
  *
  */
 
@@ -121,7 +122,6 @@ static void backlight_generate_event(struct backlight_device *bd,
 	kobject_uevent_env(&bd->dev.kobj, KOBJ_CHANGE, envp);
 	sysfs_notify(&bd->dev.kobj, NULL, "actual_brightness");
 	sysfs_notify(&bd->dev.kobj, NULL, "brightness");
-	sysfs_notify(&bd->dev.kobj, NULL, "brightness_clone");
 }
 
 static ssize_t bl_power_show(struct device *dev, struct device_attribute *attr,
@@ -190,7 +190,6 @@ int backlight_device_set_brightness(struct backlight_device *bd,
 				else
 					bd->use_count--;
 			}
-
 			pr_debug("set brightness to %lu\n", brightness);
 			if (!brightness) {
 				bl_event = BACKLIGHT_OFF;
